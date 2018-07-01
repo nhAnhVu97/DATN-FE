@@ -1,0 +1,61 @@
+body {
+  background-color: #e5e5e5 !important; }
+
+.navbar {
+  background-color: #096dd9;
+  padding: 15px; }
+  .navbar .title {
+    font-size: 16px;
+    color: white;
+    font-weight: bold; }
+    .navbar .title .logo {
+      width: 45px; }
+
+.table {
+  padding: 20px 0; }
+  .table .table-title {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    color: #096dd9; }
+  .table .box {
+    background-color: #fff;
+    padding: 15px; }
+    .table .box .menu {
+      padding-bottom: 10px; }
+
+.article .title {
+  color: #1890ff;
+  font-size: 21px;
+  font-weight: bold;
+  padding-bottom: 10px; }
+.article .description {
+  color: #8c8c8c;
+  padding-bottom: 10px; }
+.article .info {
+  color: #8c8c8c;
+  padding-bottom: 10px; }
+  .article .info .info-title {
+    color: #096dd9;
+    padding: 10px; }
+
+.title-form {
+  text-align: center;
+  padding: 10px;
+  background-color: #1890ff;
+  color: white; }
+
+.category-form {
+  padding: 10px !important; }
+
+.button-close {
+  margin-left: 15px !important; }
+
+.category-question .title {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 10px; }
+.category-question .ckbQuestionType {
+  margin: 0 10px 10px 0; }
+
+/*# sourceMappingURL=style.css.map */

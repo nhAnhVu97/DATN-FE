@@ -1,0 +1,81 @@
+@import "_color";
+body {
+    background-color: #e5e5e5 !important;
+}
+
+.navbar {
+    background-color: $primary;
+    padding: 15px;
+    .title {
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        .logo {
+            width: 45px;
+        }
+    }
+}
+
+.table {
+    padding: 20px 0;
+    .table-title {
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 20px;
+        color: $primary;
+    }
+    .box {
+        background-color: #fff;
+        padding: 15px;
+        .menu {
+            padding-bottom: 10px;
+        }
+    }
+}
+
+.article {
+    .title {
+        color: $title;
+        font-size: 21px;
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    .description {
+        color: $muted;
+        padding-bottom: 10px;
+    }
+    .info {
+        color: $muted;
+        padding-bottom: 10px;
+        .info-title {
+            color: $primary;
+            padding: 10px;
+        }
+    }
+}
+
+.title-form {
+    text-align: center;
+    padding: 10px;
+    background-color: $title;
+    color: white;
+}
+
+.category-form {
+    padding: 10px !important;
+}
+
+.button-close {
+    margin-left: 15px !important;
+}
+
+.category-question {
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    .ckbQuestionType{
+        margin: 0 10px 10px 0;
+    }
+}
