@@ -27,7 +27,6 @@ class EditCategoryPage extends Component {
             var { itemEditing } = nextProps;
             this.setState({
                 name: itemEditing.name,
-                status: itemEditing.status
             })
         }
     }
@@ -50,6 +49,7 @@ class EditCategoryPage extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         var { category } = this.props;
+    
         return (
             <div className="table" >
                 <div className="table-title">

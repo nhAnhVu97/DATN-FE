@@ -28,7 +28,7 @@ class AddTypeNewPage extends Component {
                 if (!err) {
                     var typeNews = {
                         name: values.name,
-                        status: values.status,
+                        status: (values.status) === true ? 1 : 2,
                         category_id: this.state.category_id,
                         category_name: this.state.category_name,
                     }
@@ -44,7 +44,6 @@ class AddTypeNewPage extends Component {
         this.setState({ category_id: values.key, category_name: values.label, checkSelect: false }, () => {
             this.props.form.validateFields(['select'], { force: true })
         })
-
     }
     showOptions(category) {
         var result = null;
@@ -56,9 +55,6 @@ class AddTypeNewPage extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         var { typeNews, category } = this.props;
-        // if (notifycation.types === "success") {
-        //     return <Redirect to="/categories" />
-        // }
         return (
             <div className="table" >
                 <div className="table-title">
@@ -97,7 +93,7 @@ class AddTypeNewPage extends Component {
                                         valuePropName: 'checked',
                                         initialValue: false,
                                     })(
-                                        <Checkbox>Hiện thể loại</Checkbox>
+                                        <Checkbox>Hiện loại tin</Checkbox>
                                     )}
                                 </FormItem>
                                 <Button loading={typeNews.isLoading} type="primary" htmlType="submit">Hoàn thành</Button>

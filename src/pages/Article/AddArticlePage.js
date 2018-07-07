@@ -1,80 +1,108 @@
 import React, { Component } from 'react';
-import { Form, Input, Modal, Icon, Select, Upload, Row, Col, Checkbox, Button } from 'antd';
-import { storage } from './../firebase/index'
+import { Form, Input, Modal, Icon, Select, Upload, Row, Col, Checkbox, Button, message, Spin } from 'antd';
+// import { storage } from './../firebase/index'
 import { connect } from 'react-redux';
-import { actFetchCategoryRequest, actFetchTypeNewsRequest } from './../actions/index';
+import { actFetchCategoryRequest, actFetchTypeNewsWithCategoryIdRequest, actAddArticleRequest } from './../../actions/index';
+
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState } from 'draft-js';
+import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 const FormItem = Form.Item;
-const { TextArea } = Input;
 const Option = Select.Option;
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+const fileList = [];
+
+function beforeUpload(file) {
+    const isJPG = file.type === 'image/jpeg';
+    const isPNG = file.type === 'image/png';
+    if (!isJPG && !isPNG) {
+        message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+}
+const props = {
+    name: 'UploadedImage',
+    action: 'http://localhost:57704/api/myfileupload',
+    headers: {
+        authorization: 'authorization-text',
+    },
+    beforeUpload: beforeUpload,
+    listType: 'picture',
+    defaultFileList: [...fileList],
+
+};
 
 class AddArticlePage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            previewVisible: false,
-            previewImage: '',
-            fileList: [],
+            disabledNewsType: true,
             title: '',
             category: '',
             typeNews: '',
             content: '',
-            description: '',
+            description: EditorState.createEmpty(),
             images: '',
         }
     }
 
     componentDidMount() {
         this.props.getCategory();
-        this.props.getTypeNews();
     }
 
+    //submit form
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                this.setState({
+                var article = {
                     title: values.title,
-                    category: values.category,
-                    typeNews: values.typeNews,
-                    content: values.content,
-                    description: values.description,
-                });
+                    category_id: values.category,
+                    news_type_id: values.typeNews,
+                    content: this.state.content,
+                    description: this.state.description,
+                    images: this.state.images,
+                    status: values.status,
+                    account_id: 1
+                }
+                this.props.onAddArticle(article);
+                this.props.history.push("/articles")
             }
         });
     }
-    handleCancel = () => this.setState({ previewVisible: false })
 
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
+
+    // thay doi editor description
+    onDescriptionChange = (description) => {
+        this.setState({ description: draftToHtml(convertToRaw(description.getCurrentContent())) })
     }
 
-    handleChange = (e) => {
-        this.setState({ fileList: e.fileList })
-        var image = e.file;
-
-        console.log(image)
-        // //tao dinh dang blob cho file
-        // var blob = new Blob([image], { type: `images/${image.type}` })
-
-        // //firebase
-        // const uploadTask = storage.ref(`images/${image.name}`).put(blob);
-        // uploadTask.on('state_changed', (snapshot) => { }, (error) => {
-        //     console.log(error)
-        // }, () => {
-        //     storage.ref('images').child(image.name).getDownloadURL().then(url => {
-        //         console.log(url);
-        //         this.setState({ images: url })
-        //     })
-        // })
-
+    //thay doi editor content
+    onContentChange = (content) => {
+        this.setState({ content: draftToHtml(convertToRaw(content.getCurrentContent())) })
     }
 
+    // chon hinh anh
+    onChangeImage = (info) => {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+            this.setState({ images: info.file.name })
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+
+    // lay danh sach category
     showOptionsCategory(category) {
         var result = null;
         result = category.map((item, index) => {
@@ -82,6 +110,9 @@ class AddArticlePage extends Component {
         })
         return result;
     }
+
+
+    // lay danh sach newstpye sau khi goi api
     showOptionsTypeNews(typeNews) {
         var result = null;
         result = typeNews.map((item, index) => {
@@ -89,13 +120,18 @@ class AddArticlePage extends Component {
         })
         return result;
     }
+
+
+    // goi api lay newstpye theo category id
+    SelectedNewsType = (value) => {
+        this.props.getTypeNews(value);
+        this.setState({ disabledNewsType: false })
+        this.props.form.setFieldsValue({'typeNews': ''})
+    }
+
+
+
     render() {
-        const uploadButton = (
-            <div>
-                <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -107,8 +143,7 @@ class AddArticlePage extends Component {
             },
         };
         const { getFieldDecorator } = this.props.form;
-
-        let { typeNews, category } = this.props;
+        let { newsType, category } = this.props;
         return (
             <div className="table" >
                 <div className="table-title">
@@ -118,14 +153,14 @@ class AddArticlePage extends Component {
                     <div className="menu">
                     </div>
                     <Row>
-                        <Col lg={16}>
+                        <Col lg={18}>
                             <Form onSubmit={this.handleSubmit} className="login-form">
                                 <FormItem  {...formItemLayout} label="Thể loại">
                                     {getFieldDecorator('category', {
                                         rules: [{ required: true, message: 'Vui lòng chọn thể loại ' }],
                                     })(
-                                        <Select placeholder="Chọn thể loại">
-                                            {this.showOptionsCategory(category.items)}
+                                        <Select onChange={this.SelectedNewsType} placeholder="Chọn thể loại">
+                                                {this.showOptionsCategory(category.items)}
                                         </Select>
                                     )}
                                 </FormItem>
@@ -133,8 +168,8 @@ class AddArticlePage extends Component {
                                     {getFieldDecorator('typeNews', {
                                         rules: [{ required: true, message: 'Vui lòng chọn loại tin ' }],
                                     })(
-                                        <Select >
-                                            {this.showOptionsTypeNews(typeNews.items)}
+                                        <Select disabled={this.state.disabledNewsType} >
+                                                {(newsType.isLoading) ? "" : this.showOptionsTypeNews(newsType.items)}
                                         </Select>
                                     )}
                                 </FormItem>
@@ -149,14 +184,24 @@ class AddArticlePage extends Component {
                                     {getFieldDecorator('description', {
                                         rules: [{ required: true, message: 'Mô tả bài viết không được để trống' }],
                                     })(
-                                        <TextArea rows={4} placeholder="Password" />
+                                        <Editor key={1}
+                                            // editorState={editorState}
+                                            wrapperClassName="wrapper"
+                                            editorClassName="editor"
+                                            onEditorStateChange={this.onDescriptionChange}
+                                        />
                                     )}
                                 </FormItem>
                                 <FormItem  {...formItemLayout} label="Nội dung bài viết">
                                     {getFieldDecorator('content', {
                                         rules: [{ required: true, message: 'Nội dung bài viết không được để trống' }],
                                     })(
-                                        <TextArea rows={4} placeholder="Password" />
+                                        <Editor key={2}
+
+                                            wrapperClassName="wrapper"
+                                            editorClassName="editor"
+                                            onEditorStateChange={this.onContentChange}
+                                        />
                                     )}
                                 </FormItem>
                                 <FormItem
@@ -164,18 +209,15 @@ class AddArticlePage extends Component {
                                     label="Hình ảnh"
                                 >
                                     {getFieldDecorator('upload', {
+                                        getValueFromEvent: this.normFile,
                                         rules: [{ required: true, message: 'Vui lòng chọn hình ảnh' }],
                                     })(
                                         <div>
 
-                                            <Upload
-                                                data={this.handleUploadFile}
-                                                listType="picture-card"
-                                                fileList={this.state.fileList}
-                                                onPreview={this.handlePreview}
-                                                onChange={this.handleChange}
-                                            >
-                                                {this.state.fileList.length >= 1 ? null : uploadButton}
+                                            <Upload {...props} onChange={this.onChangeImage}>
+                                                <Button>
+                                                    <Icon type="upload" /> Click to Upload
+                                                </Button>
                                             </Upload>
                                             <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                                                 <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
@@ -183,11 +225,15 @@ class AddArticlePage extends Component {
                                         </div>
                                     )}
                                 </FormItem>
-                                <FormItem {...formItemLayout}
-                                    label="Trạng thái" >
-                                    <Checkbox>Ẩn bài viết</Checkbox>
+                                <FormItem {...formItemLayout} label="Trạng thái" >
+                                    {getFieldDecorator('status', {
+                                        valuePropName: 'checked',
+                                        initialValue: false,
+                                    })(
+                                        <Checkbox>Hiện bài viết</Checkbox>
+                                    )}
                                 </FormItem>
-                                <FormItem>
+                                <FormItem   {...formItemLayout}>
                                     <Button type="primary" htmlType="submit" className="login-form-button">
                                         Hoàn thành
                                     </Button>
@@ -195,10 +241,8 @@ class AddArticlePage extends Component {
                             </Form>
                         </Col>
                     </Row>
-
                 </div>
-            </div >
-
+            </div>
         );
     }
 }
@@ -207,7 +251,7 @@ class AddArticlePage extends Component {
 const mapStateToProps = state => {
     return {
         category: state.category,
-        typeNews: state.typeNews
+        newsType: state.typeNews
     }
 }
 
@@ -216,9 +260,12 @@ const mapDispatchToProps = (dispatch) => {
         getCategory: () => {
             dispatch(actFetchCategoryRequest())
         },
-        getTypeNews: () => {
-            dispatch(actFetchTypeNewsRequest())
+        getTypeNews: (id) => {
+            dispatch(actFetchTypeNewsWithCategoryIdRequest(id))
         },
+        onAddArticle: (article) => {
+            dispatch(actAddArticleRequest(article))
+        }
     }
 }
 

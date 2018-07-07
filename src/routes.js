@@ -1,9 +1,9 @@
 import React from 'react';
 import HomePage from './pages/HomePage';
-import ArticlePage from './pages/ArticlePage';
-import AddArticlePage from './pages/AddArticlePage';
+import ArticlePage from './pages/Article/ArticlePage';
+import AddArticlePage from './pages/Article/AddArticlePage';
 import CategoryPage from './pages/Category/CategoryPage';
-// import EditArticlePage from './pages/EditArticlePage';
+import EditArticlePage from './pages/Article/EditArticlePage';
 import AddCategoryPage from './pages/Category/AddCategoryPage';
 import EditCategoryPage from './pages/Category/EditCategoryPage';
 import TypeNewsPage from './pages/TypeNews/TypeNewsPage';
@@ -12,6 +12,9 @@ import AddTypeNewPage from './pages/TypeNews/AddTypeNewPage';
 import ImagePage from './pages/Images/ImagePage';
 import QuestionPage from './pages/Question/QuestionPage';
 import AddQuestion from './pages/Question/AddQuestion';
+import AddGroup from './pages/GroupAnswer/AddGroup';
+import GroupAnswerPage from './pages/GroupAnswer/GroupAnswerPage';
+import EditGroup from './pages/GroupAnswer/EditGroup';
 const routes = [
     {
         path: '/',
@@ -26,7 +29,12 @@ const routes = [
     {
         path: '/articles/add',
         exact: false,
-        main: () => <AddArticlePage />
+        main: ({ history }) => <AddArticlePage history={history} />
+    },
+    {
+        path: '/articles/edit/:id',
+        exact: false,
+        main: ({ history, match }) => <EditArticlePage history={history} match={match} />
     },
     {
         path: '/categories',
@@ -72,6 +80,22 @@ const routes = [
         path: '/question/add',
         exact: true,
         main: () => <AddQuestion />
+    },
+    {
+        path: '/group/add',
+        exact: false,
+        main: ({ history }) => <AddGroup history={history} />
+    },
+    {
+        path: '/group',
+        exact: true,
+        main: () => <GroupAnswerPage />
+    },
+    {
+        path: '/group/edit/:id',
+        exact: true,
+        main: ({ history, match }) => <EditGroup history={history} match={match} />
     }
+
 ];
 export default routes;

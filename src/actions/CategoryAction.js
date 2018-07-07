@@ -121,7 +121,7 @@ export const actEditCategoryError = (error) => {
 export const actAddCategoryRequest = (category) => {
     return (dispatch) => {
         dispatch(actAddCategory());
-        return callApi(`${BASE_URL}categories`, "POST", category).then(res => {
+        return callApi(`${BASE_URL}category`, "POST", category).then(res => {
             console.log("res", res.data)
             if (res.status === 200) {
                 dispatch(actAddCategorySuccess(res.data))

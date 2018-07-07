@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Checkbox, Input, Icon, Row, Col, Alert, Spin, Select } from 'antd';
-import { actFetchTestTypeRequest } from './../../actions/index';
+import { actAddTypeNewsRequest, actFetchCategoryRequest } from './../../actions/index';
 import { Link } from 'react-router-dom';
 const FormItem = Form.Item;
 const Option = Select.Option;
-class AddQuestion extends Component {
+class EditQuestion extends Component {
 
     constructor(props) {
         super(props)
@@ -14,7 +14,6 @@ class AddQuestion extends Component {
     }
 
     componentDidMount() {
-        
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -106,6 +105,7 @@ class AddQuestion extends Component {
                                         <Button className="button-close" >Quay lại</Button>
                                     </Link>
                                 </Col>
+                                
                             </Form>
                         </Col>
                     </Row>
@@ -123,11 +123,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getTestType: () => {
-            dispatch(actFetchTestTypeRequest())
+        onAddTypeNews: (typeNews) => {
+            dispatch(actAddTypeNewsRequest(typeNews))
         },
+        getCategory: () => {
+            dispatch(actFetchCategoryRequest())
+        }
     }
 }
 
-const ExAddQuestion = Form.create()(AddQuestion);
-export default connect(mapStateToProps, mapDispatchToProps)(ExAddQuestion);
+const ExEditQuestion = Form.create()(EditQuestion);
+export default connect(mapStateToProps, mapDispatchToProps)(ExEditQuestion);

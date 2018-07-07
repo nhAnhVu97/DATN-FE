@@ -5,6 +5,7 @@ import routes from './routes';
 // component
 import Navbar from './components/Navbar/Navbar'
 import { Row, Col } from 'antd';
+import LoginPage from './pages/Login/LoginPage';
 class App extends Component {
   render() {
     return (
@@ -26,6 +27,7 @@ class App extends Component {
           </Row>
         </div>
       </Router>
+      // <LoginPage />
     );
   }
 

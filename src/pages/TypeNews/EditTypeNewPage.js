@@ -21,15 +21,15 @@ class EditTypeNewPage extends Component {
     componentDidMount() {
         this.props.getCategory();
         var { match } = this.props;
-        var id = match.params.id;
-        if (id) {
+        if (match) {
+            var id = match.params.id;
             this.props.getTypeNews(id)
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps && nextProps.itemEditing) {
-            let { itemEditing } = nextProps;
+            var { itemEditing } = nextProps;
             this.setState({
                 name: itemEditing.name,
                 status: itemEditing.status,
@@ -45,15 +45,14 @@ class EditTypeNewPage extends Component {
                 var arrTypeNews = {
                     id: this.props.match.params.id,
                     name: values.name,
-                    status: values.status,
+                    status: (values.status) ? 1 : 2,
                     category_id: this.state.category_id,
                     category_name: this.state.category_name
                 }
 
                 this.props.onUpdateTypeNews(arrTypeNews)
-                this.props.history.goBack();
+                this.props.history.push("/typenews");
             }
-            console.log(arrTypeNews)
         })
     }
 

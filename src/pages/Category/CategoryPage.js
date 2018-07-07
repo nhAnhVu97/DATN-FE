@@ -11,8 +11,6 @@ class CategoryPage extends Component {
         this.state = {
             sortedInfo: null,
             visible: false,
-            categoryId: null,
-            data: [],
         }
     }
     componentDidMount() {
@@ -114,14 +112,6 @@ class CategoryPage extends Component {
                 </span>
             ),
         },];
-
-
-        // if (data.error) {
-        //     notification.open({
-        //         message: 'Notification Title',
-        //         description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-        //     });
-        // }
         return (
             <div className="table" >
                 <div className="table-title">
@@ -137,8 +127,8 @@ class CategoryPage extends Component {
                     <Row>
                         <Col>
                             <Tabs defaultActiveKey="1">
-                                <TabPane tab="Đang hiển thị" key="1"><Table rowKey={record => record.id} loading={data.isLoading} columns={columnsEnableItems} dataSource={enableItem} onChange={this.handleChange} /></TabPane>
-                                <TabPane tab="Đã xóa" key="2"><Table rowKey={record => record.id} loading={data.isLoading} columns={columnsDisableItems} dataSource={disableItem} onChange={this.handleChange} /></TabPane>
+                                <TabPane tab="Đang hiển thị" key="1"><Table rowKey={record => record.id} loading={data.isLoading} columns={columnsEnableItems} dataSource={enableItem} /></TabPane>
+                                <TabPane tab="Đã xóa" key="2"><Table rowKey={record => record.id} loading={data.isLoading} columns={columnsDisableItems} dataSource={disableItem} /></TabPane>
                             </Tabs>
                         </Col>
                     </Row>

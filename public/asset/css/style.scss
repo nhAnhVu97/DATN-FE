@@ -75,7 +75,30 @@ body {
         font-weight: bold;
         padding-bottom: 10px;
     }
-    .ckbQuestionType{
+    .ckbQuestionType {
         margin: 0 10px 10px 0;
+    }
+}
+
+.editor {
+    height: 185px !important;
+    border: 1px solid $muted;
+}
+
+.login-form {
+    .title {
+        font-size: 27px;
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+    background-color: white;
+    padding: 35px !important;
+    margin-top: 50px !important;
+    .ant-form-item-control-wrapper {
+        text-align: center;
+        .ant-form-explain {
+            text-align: left;
+        }
     }
 }

@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 const TabPane = Tabs.TabPane;
 class TypeNewsPage extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
     componentDidMount() {
         this.props.getTypeNews();
     }
@@ -22,10 +26,9 @@ class TypeNewsPage extends Component {
                 name: record.name,
                 category_id: record.category_id,
                 category_name: record.category_name,
-                status: false,
-
+                status: 2,
             }
-            this.props.onUpdateCategory(typeNews)
+            this.props.onUpdateNewsType(typeNews)
             // this.props.onUpdateCategory(category)
         }
     }
@@ -41,24 +44,39 @@ class TypeNewsPage extends Component {
                 name: record.name,
                 category_id: record.category_id,
                 category_name: record.category_name,
-                status: true,
+                status: 1,
             }
-            this.props.onUpdateCategory(typeNews)
+            this.props.onUpdateNewsType(typeNews)
         }
     }
     render() {
+
+        let { typeNews, notifycation } = this.props;
+        let enableItem = [];
+        let disableItem = [];
+
+        for (var i in typeNews.items) {
+            if (typeNews.items[i].status === 1) {
+                enableItem.push(typeNews.items[i])
+            } else {
+                disableItem.push(typeNews.items[i])
+            }
+        }
         const columnsEnableItem = [{
             title: '#',
             dataIndex: 'id',
+            key: 'id',
             sorter: (a, b) => a.id - b.id,
         }, {
             title: 'Tên loại tin',
             dataIndex: 'name',
+            key: 'name',
             sorter: (a, b) => a.name.length - b.name.length,
         }, {
             title: 'Thể loại',
-            dataIndex: 'category_name',
-            sorter: (a, b) => a.category_name.length - b.category_name.length,
+            dataIndex: 'Category.name',
+            key: 'Category.name',
+            sorter: (a, b) => a.Category.name.length - b.Category.name.length,
         }, {
             title: 'Chức năng',
             key: 'action',
@@ -72,18 +90,22 @@ class TypeNewsPage extends Component {
                 </span >
             ),
         }];
+
         const columnsDisableItem = [{
             title: '#',
             dataIndex: 'id',
+            key: 'id',
             sorter: (a, b) => a.id - b.id,
         }, {
             title: 'Tên loại tin',
             dataIndex: 'name',
+            key: 'name',
             sorter: (a, b) => a.name.length - b.name.length,
         }, {
             title: 'Thể loại',
-            dataIndex: 'category_name',
-            sorter: (a, b) => a.category_name.length - b.category_name.length,
+            dataIndex: 'Category.name',
+            key: 'Category.name',
+            sorter: (a, b) => a.Category.name.length - b.Category.name.length,
         }, {
             title: 'Chức năng',
             key: 'action',
@@ -99,17 +121,6 @@ class TypeNewsPage extends Component {
         }];
 
 
-        let { typeNews, notifycation } = this.props;
-        let enableItem = [];
-        let disableItem = [];
-
-        for (var i in typeNews.items) {
-            if (typeNews.items[i].status) {
-                enableItem.push(typeNews.items[i])
-            } else {
-                disableItem.push(typeNews.items[i])
-            }
-        }
         return (
             <div className="table" >
                 <div className="table-title">
@@ -147,7 +158,7 @@ const mapDispatchToProps = (dispatch) => {
         getTypeNews: () => {
             dispatch(actFetchTypeNewsRequest())
         },
-        onUpdateCategory: (typeNews) => {
+        onUpdateNewsType: (typeNews) => {
             dispatch(actUpdateTypeNewsRequest(typeNews))
         }
     }

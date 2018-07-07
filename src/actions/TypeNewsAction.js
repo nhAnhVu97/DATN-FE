@@ -1,12 +1,14 @@
 import callApi from './../ultils/callApi';
+import { BASE_URL } from './../ultils/config';
 import * as Types from './../constants/ActionType';
 import { actShowNotifycation } from './NotifyAction';
+import { stringify } from 'querystring';
 
 
 export const actFetchTypeNewsRequest = () => {
     return (dispatch) => {
         dispatch(actFetchTypeNews())
-        return callApi(`http://localhost:4000/typenews`, "GET", null).then(res => {
+        return callApi(`${BASE_URL}newstype`, "GET", null).then(res => {
             dispatch(actFetchTypeNewsSuccess(res.data));
         }).catch(err => {
             dispatch(actFetchTypeNewsError(err.message));
@@ -37,7 +39,7 @@ export const actFetchTypeNewsError = (typenews) => {
 export const actFetchTypeNewsWithIdRequest = (id) => {
     return (dispatch) => {
         dispatch(actFetchTypeNewsWithId())
-        return callApi(`http://localhost:4000/typenews/${id}`, "GET", null).then(res => {
+        return callApi(`${BASE_URL}newstype/${id}`, "GET", null).then(res => {
             dispatch(actFetchTypeNewsWithIdSuccess(res.data))
         }).catch(err => {
             dispatch(actFetchTypeNewsWithIdError(err.message))
@@ -66,7 +68,7 @@ export const actFetchTypeNewsWithIdError = (typenews) => {
 export const actUpdateTypeNewsRequest = (typenews) => {
     return (dispatch) => {
         dispatch(actUpdateTypeNews())
-        return callApi(`http://localhost:4000/typenews/${typenews.id}`, "PUT", typenews).then(res => {
+        return callApi(`${BASE_URL}newstype/${typenews.id}`, "PUT", typenews).then(res => {
             dispatch(actUpdateTypeNewsSuccess(res.data))
             dispatch(actShowNotifycation("success", "Cập nhật thành công"))
         }).catch(err => {
@@ -96,12 +98,15 @@ export const actUpdateTypeNewsError = (typenews) => {
     }
 }
 
-export const actAddTypeNewsRequest = (typeNews) => {
+export const actAddTypeNewsRequest = (typenews) => {
     return (dispatch) => {
         dispatch(actAddTypeNews())
-        return callApi(`http://localhost:4000/typenews`, "POST", typeNews).then(res => {
-            dispatch(actAddTypeNewsSuccess(res.data))
-            dispatch(actShowNotifycation("success", "Thêm thành công"))
+        return callApi(`${BASE_URL}newstype`, "POST", stringify(typenews)).then(res => {
+            if (res.status === 200) {
+                console.log(res.data)
+                dispatch(actAddTypeNewsSuccess(res.data))
+                dispatch(actShowNotifycation("success", "Thêm thành công"))
+            }
         }).catch(err => {
             dispatch(actAddTypeNewsError(err.message))
             dispatch(actShowNotifycation("error", err.message))
@@ -116,20 +121,50 @@ export const actAddTypeNews = () => {
     }
 }
 
-export const actAddTypeNewsSuccess = (typeNews) => {
+export const actAddTypeNewsSuccess = (typenews) => {
     return {
         type: Types.ADD_TYPENEWS_SUCCESS,
-        typeNews
+        typenews
     }
 }
 
-export const actAddTypeNewsError = (typeNews) => {
+export const actAddTypeNewsError = (typenews) => {
     return {
         type: Types.ADD_TYPENEWS_ERROR,
-        typeNews
+        typenews
     }
 }
 
+
+export const actFetchTypeNewsWithCategoryIdRequest = (categoryId) => {
+    return (dispatch) => {
+        dispatch(actFetchTypeNewsWithCategoryId())
+        return callApi(`${BASE_URL}newstype_with_categoryid/${categoryId}`, "GET", null).then(res => {
+            dispatch(actFetchTypeNewsWithCategoryIdSuccess(res.data));
+        }).catch(err => {
+            dispatch(actFetchTypeNewsWithCategoryIdError(err.message));
+        })
+    }
+}
+
+export const actFetchTypeNewsWithCategoryId = () => {
+    return {
+        type: Types.FETCH_TYPENEWS_WITH_CATEGORY_ID
+    }
+}
+export const actFetchTypeNewsWithCategoryIdSuccess = (typenews) => {
+    return {
+        type: Types.FETCH_TYPENEWS_WITH_CATEGORY_ID_SUCCESS,
+        typenews
+    }
+}
+
+export const actFetchTypeNewsWithCategoryIdError = (typenews) => {
+    return {
+        type: Types.FETCH_TYPENEWS_WITH_CATEGORY_ID_ERROR,
+        typenews
+    }
+}
 
 
 

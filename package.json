@@ -6,17 +6,24 @@
   "dependencies": {
     "antd": "^3.6.3",
     "axios": "^0.18.0",
+    "draftjs-to-html": "^0.8.4",
     "firebase": "^5.1.0",
+    "immutable": "^3.8.2",
     "re-base": "^3.2.3",
     "react": "^16.4.1",
+    "react-ckeditor-component": "^1.0.7",
     "react-dom": "^16.4.1",
     "react-draft-wysiwyg": "^1.12.13",
+    "react-froala-wysiwyg": "^2.8.4",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-rte": "^0.16.1",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "slate": "^0.34.5",
+    "slate-react": "^0.13.2"
   },
   "scripts": {
     "start": "react-scripts start",

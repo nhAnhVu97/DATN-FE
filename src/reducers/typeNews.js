@@ -15,6 +15,12 @@ const typeNews = (state = initialState, action) => {
             return { ...state, isLoading: false, items: action.typenews }
         case Types.FETCH_ALL_TYPENEWS_ERROR:
             return { ...state, isLoading: false, error: action.typenews }
+        case Types.FETCH_TYPENEWS_WITH_CATEGORY_ID:
+            return { ...state, isloading: true }
+        case Types.FETCH_TYPENEWS_WITH_CATEGORY_ID_SUCCESS:
+            return { ...state, isLoading: false, items: action.typenews }
+        case Types.FETCH_TYPENEWS_WITH_CATEGORY_ID_ERROR:
+            return { ...state, isLoading: false, error: action.typenews }
         case Types.UPDATE_TYPENEWS:
             return { ...state, isLoading: true }
         case Types.UPDATE_TYPENEWS_SUCCESS:
@@ -26,11 +32,11 @@ const typeNews = (state = initialState, action) => {
         case Types.ADD_TYPENEWS:
             return { ...state, isLoading: true }
         case Types.ADD_TYPENEWS_SUCCESS:
-            //them loai moi vao state
-            state.items.push(action.typeNews)
+            state.items.push(action.typenews)
+            console.log(state)
             return { ...state, isLoading: false }
         case Types.ADD_TYPENEWS_ERROR:
-            return { ...state, isLoading: false, error: action.typeNews }
+            return { ...state, isLoading: false, error: action.typenews }
         default:
             return state;
     }

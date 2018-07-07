@@ -8,12 +8,12 @@ var initialState = {
 
 const question = (state = initialState, action) => {
     switch (action.type) {
-        case Types.FETCH_QUESTION_TYPE:
+        case Types.FETCH_TEST_TYPE:
             return { ...state, isLoading: true }
-        case Types.FETCH_QUESTION_TYPE_SUCCESS:
-            return { ...state, isLoading: false, items: action.questions }
-        case Types.FETCH_QUESTION_TYPE_ERROR:
-            return { ...state, isLoading: true, error: action.questions }
+        case Types.FETCH_TEST_TYPE_SUCCESS:
+            return { ...state, isLoading: true, items: action.testType }
+        case Types.FETCH_TEST_TYPE_ERROR:
+            return { ...state, isLoading: true, error: action.testType }
         default:
             return state;
     }

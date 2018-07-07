@@ -1,37 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Checkbox, Input, Icon, Row, Col, Alert, Spin, Select } from 'antd';
-import { actFetchTestTypeRequest } from './../../actions/index';
+import { Form, Button, Checkbox, Input, Row, Col, Select } from 'antd';
+import { actFetchTestTypeRequest, actAddGroupAnswersRequest } from './../../actions/index';
 import { Link } from 'react-router-dom';
 const FormItem = Form.Item;
 const Option = Select.Option;
-class AddQuestion extends Component {
-
+const { TextArea } = Input;
+class AddGroup extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            test_type_id: "",
+            info: "",
+            checkRequire: true
         }
     }
 
     componentDidMount() {
-        
+        this.props.getTestType();
     }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (this.state.category_id == null) {
-                console.log("null")
-            } else {
-                if (!err) {
-                    var typeNews = {
-
-                    }
-                    this.props.onAddTypeNews(typeNews)
-                    this.props.history.push("/typenews");
+            if (!err) {
+                var groupAnswer = {
+                    name: values.name,
+                    info: values.info,
+                    status: values.status,
+                    test_type_id: this.state.test_type_id
                 }
+                this.props.onAddGroup(groupAnswer)
+                this.props.history.push("/group")
             }
-
         })
+    }
+
+    //show option test type
+    showTestType = (testType) => {
+        var result = null
+        result = testType.map((item, index) => {
+            return <Option key={index} value={item.id}>{item.name}</Option>
+        })
+        return result
+    }
+
+    handleChangeTestType = (value) => {
+        this.setState({ test_type_id: value })
     }
 
     render() {
@@ -45,7 +60,8 @@ class AddQuestion extends Component {
                 sm: { span: 16 },
             },
         };
-        const { getFieldDecorator } = this.props.form;;
+        const { getFieldDecorator } = this.props.form;
+        var { testType } = this.props;
         return (
             <div className="table" >
                 <div className="table-title">
@@ -62,41 +78,32 @@ class AddQuestion extends Component {
                                     {getFieldDecorator('test', {
                                         rules: [{ required: true, message: 'Loại trắc nghiệm không được bỏ trống' }],
                                     })(
-                                        <Select>
-                                            <Option value="jack">Jack</Option>
-                                            <Option value="lucy">Lucy</Option>
-                                            <Option value="disabled" disabled>Disabled</Option>
-                                            <Option value="Yiminghe">yiminghe</Option>
+                                        <Select onChange={this.handleChangeTestType}>
+                                            {this.showTestType(testType.items)}
                                         </Select>
                                     )}
                                 </FormItem>
-                                <FormItem    {...formItemLayout} label="Nhóm">
-                                    {getFieldDecorator('group', {
-                                        rules: [{ required: true, message: 'Nhóm không được bỏ trống' }]
-                                    })(
-                                        <Select >
-                                            <Option value="jack">Jack</Option>
-                                            <Option value="lucy">Lucy</Option>
-                                            <Option value="disabled" disabled>Disabled</Option>
-                                            <Option value="Yiminghe">yiminghe</Option>
-                                        </Select>
-                                    )}
-
-                                </FormItem>
-                                <FormItem   {...formItemLayout} label="Câu hỏi">
-                                    {getFieldDecorator('question', {
+                                <FormItem   {...formItemLayout} label="Tên nhóm">
+                                    {getFieldDecorator('name', {
                                         rules: [{ required: true, message: 'Nhóm không được bỏ trống' }]
                                     })(
                                         <Input />
                                     )}
-
+                                </FormItem>
+                                <FormItem   {...formItemLayout} label="Thông tin">
+                                    {getFieldDecorator('info', {
+                                        rules: [{ required: true, message: 'Thông tin không được bỏ trống' }],
+                                        initialValue: this.state.info
+                                    })(
+                                        <TextArea rows={4} />
+                                    )}
                                 </FormItem>
                                 <FormItem   {...formItemLayout} label="Trạng thái">
                                     {getFieldDecorator('status', {
                                         valuePropName: 'checked',
-                                        initialValue: false,
+                                        initialValue: true,
                                     })(
-                                        <Checkbox>Hiện câu hỏi</Checkbox>
+                                        <Checkbox>Hiện nhóm</Checkbox>
                                     )}
                                 </FormItem  >
 
@@ -106,6 +113,7 @@ class AddQuestion extends Component {
                                         <Button className="button-close" >Quay lại</Button>
                                     </Link>
                                 </Col>
+
                             </Form>
                         </Col>
                     </Row>
@@ -117,7 +125,7 @@ class AddQuestion extends Component {
 
 const mapStateToProps = state => {
     return {
-        // notifycation: state.notifycation,
+        testType: state.testType
     }
 }
 
@@ -126,8 +134,11 @@ const mapDispatchToProps = (dispatch) => {
         getTestType: () => {
             dispatch(actFetchTestTypeRequest())
         },
+        onAddGroup: (items) => {
+            dispatch(actAddGroupAnswersRequest(items))
+        }
     }
 }
 
-const ExAddQuestion = Form.create()(AddQuestion);
-export default connect(mapStateToProps, mapDispatchToProps)(ExAddQuestion);
+const ExAddGroup = Form.create()(AddGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(ExAddGroup);
