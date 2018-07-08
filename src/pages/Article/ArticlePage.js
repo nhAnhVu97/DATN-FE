@@ -119,7 +119,7 @@ class ArticlePage extends Component {
                 <span>
                     <a onClick={() => this.showInfoArticles(record.id)}>Chi tiết</a>
                     <Divider type="vertical" />
-                    <Link to={`/articles/edit/${record.id}`}>Sửa</Link>
+                    <a href={`/articles/edit/${record.id}`}>Sửa</a>
                     <Divider type="vertical" />
                     <Popconfirm title="Bạn có muốn xóa bài viết này không?" onConfirm={() => this.onDeleteArticle(record)} okText="Đồng ý" cancelText="Hủy bỏ">
                         <a >Xóa</a>
@@ -157,7 +157,7 @@ class ArticlePage extends Component {
                 <span>
                     <a onClick={() => this.showInfoArticles(record.id)}>Chi tiết</a>
                     <Divider type="vertical" />
-                    <Link to={`/articles/edit/${record.id}`}>Sửa</Link>
+                    <a href={`/articles/edit/${record.id}`}>Sửa</a>
                     <Divider type="vertical" />
                     <Popconfirm title="Bạn có muốn phục hồi bài viết này không?" onConfirm={() => this.onRestoreArticle(record)} okText="Đồng ý" cancelText="Hủy bỏ">
                         <a >Phục hồi</a>
@@ -182,7 +182,7 @@ class ArticlePage extends Component {
                 </div>
                 <div className="box">
                     <div className="menu">
-                        {(notifycation.messages) ? <Alert closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
+                        {(notifycation.messages) ? <Alert showIcon banner closable message={notifycation.messages} type={notifycation.types}  /> : ""}
                     </div>
                     <Button>
                         <Link to="/articles/add" className="ant-button">Thêm bài viết</Link>

@@ -12,6 +12,7 @@ const auth = (state = initialState, action) => {
         case Types.LOGIN:
             return { ...state, isLoading: true }
         case Types.LOGIN_SUCCESS:
+            localStorage.getItem('user') = action.user
             return { ...state, isLoading: false, items: action.user }
         case Types.LOGIN_ERROR:
             return { ...state, isLoading: false, items: action.user }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Checkbox, Input, Row, Col, Select } from 'antd';
+import { Form, Button, Checkbox, Input, Row, Col, Select, Icon } from 'antd';
 import { actFetchTestTypeRequest, actFetchGroupAnswersWithIdRequest, actUpdateGroupAnswerRequest } from './../../actions/index';
 import { Link } from 'react-router-dom';
 const FormItem = Form.Item;
@@ -29,8 +29,8 @@ class EditGroup extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps && nextProps.itemEditing) {
-            var { itemEditing } = nextProps;
+        if (nextProps && nextProps.itemEditing.AnswerType) {
+            var itemEditing = nextProps.itemEditing.AnswerType;
             this.setState({
                 name: itemEditing.name,
                 status: itemEditing.status,
@@ -119,7 +119,7 @@ class EditGroup extends Component {
                                         rules: [{ required: true, message: 'Thông tin không được bỏ trống' }],
                                         initialValue: this.state.info
                                     })(
-                                        <TextArea rows={4} />
+                                        <TextArea rows={6} />
                                     )}
                                 </FormItem>
                                 <FormItem   {...formItemLayout} label="Trạng thái">
@@ -131,10 +131,10 @@ class EditGroup extends Component {
                                     )}
                                 </FormItem>
                                 <Col offset={4}>
-                                    <Button type="primary" htmlType="submit">Hoàn thành</Button>
                                     <Link to="/group">
-                                        <Button className="button-close" >Quay lại</Button>
+                                        <Button className="btn-back" ><Icon type="arrow-left" />Quay lại</Button>
                                     </Link>
+                                    <Button type="primary" htmlType="submit"><Icon type="edit" />Hoàn thành</Button>
                                 </Col>
                             </Form>
                         </Col>

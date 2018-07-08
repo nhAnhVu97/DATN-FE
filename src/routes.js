@@ -16,6 +16,8 @@ import EditQuestion from './pages/Question/EditQuestion';
 import AddGroup from './pages/GroupAnswer/AddGroup';
 import GroupAnswerPage from './pages/GroupAnswer/GroupAnswerPage';
 import EditGroup from './pages/GroupAnswer/EditGroup';
+import LoginPage from './pages/Login/LoginPage';
+
 const routes = [
     {
         path: '/',

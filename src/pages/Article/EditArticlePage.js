@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Modal, Icon, Select, Upload, Row, Col, Checkbox, Button, message, Spin } from 'antd';
-// import { storage } from './../firebase/index'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actFetchCategoryRequest, actFetchTypeNewsWithCategoryIdRequest, actFetchTypeNewsRequest, actUpdateArticleRequest, actFetchArticleWithIdRequest } from './../../actions/index';
 import CKEditor from "react-ckeditor-component";
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const fileList = [];
@@ -91,7 +92,7 @@ class EditArticlePage extends Component {
                 }
                 this.props.onEditArticle(article);
                 // this.props.history.push("/articles")
-                window.location.href ="/articles"
+                window.location.href = "/articles"
             }
         });
     }
@@ -210,7 +211,7 @@ class EditArticlePage extends Component {
                                         events={{
                                             "change": this.handleChangeDescription
                                         }}
-                                        
+
                                     />
                                     {/* )} */}
                                 </FormItem>
@@ -257,9 +258,14 @@ class EditArticlePage extends Component {
                                     )}
                                 </FormItem>
                                 <FormItem>
-                                    <Button type="primary" htmlType="submit" className="login-form-button">
-                                        Hoàn thành
-                                    </Button>
+                                    <Col offset={4}>
+                                        <Link to="/articles">
+                                            <Button className="btn-back" ><Icon type="arrow-left" />Quay lại</Button>
+                                        </Link>
+                                        <Button type="primary" htmlType="submit" className="login-form-button">
+                                            Hoàn thành<Icon type="edit" />
+                                        </Button>
+                                    </Col>
                                 </FormItem>
                             </Form>
                         </Col>

@@ -14,6 +14,7 @@ class Login extends Component {
           password: values.password
         }
         this.props.onLogin(user)
+        this.props.history.push("/")
       }
     });
   }

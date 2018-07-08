@@ -71,7 +71,7 @@ class AddQuestion extends Component {
         return (
             <div className="table" >
                 <div className="table-title">
-                    Thêm loại tin
+                    Thêm câu hỏi
                 </div>
                 <div className="box">
                     <div className="menu">

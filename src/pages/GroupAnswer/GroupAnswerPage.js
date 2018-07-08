@@ -75,9 +75,9 @@ class GroupAnswerPage extends Component {
                 <span>
                     <Link to={`/group/edit/${record.id}`}>Sửa</Link>
                     <Divider type="vertical" />
-                    <Popconfirm title="Bạn có muốn xóa nhóm này không?" onConfirm={() => this.onDeleteGroupp(record)} okText="Đồng ý" cancelText="Hủy bỏ">
+                    {/* <Popconfirm title="Bạn có muốn xóa nhóm này không?" onConfirm={() => this.onDeleteGroupp(record)} okText="Đồng ý" cancelText="Hủy bỏ">
                         <a >Xóa</a>
-                    </Popconfirm>
+                    </Popconfirm> */}
                 </span >
             ),
         },];
@@ -100,9 +100,9 @@ class GroupAnswerPage extends Component {
                 <span>
                     <Link to={`/group/edit/${record.id}`}>Sửa</Link>
                     <Divider type="vertical" />
-                    <Popconfirm title="Bạn có muốn phục hồi nhóm này không?" onConfirm={() => this.onRestoreGroup(record)} okText="Đồng ý" cancelText="Hủy bỏ">
+                    {/* <Popconfirm title="Bạn có muốn phục hồi nhóm này không?" onConfirm={() => this.onRestoreGroup(record)} okText="Đồng ý" cancelText="Hủy bỏ">
                         <a >Phục hồi</a>
-                    </Popconfirm>
+                    </Popconfirm> */}
                 </span>
             ),
         },];
@@ -117,7 +117,7 @@ class GroupAnswerPage extends Component {
                         {(notifycation.messages) ? <Alert closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
                     </div>
                     <Link to="/group/add" >
-                        <Button>Thêm nhóm</Button>
+                        {/* <Button>Thêm nhóm</Button> */}
                     </Link>
                     <Row>
                         <Col>

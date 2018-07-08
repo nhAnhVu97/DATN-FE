@@ -6,10 +6,11 @@ import { actShowNotifycation } from './NotifyAction';
 export const actLoginRequest = (user) => {
     return (dispatch) => {
         dispatch(actLogin());
-        return callApi(`${BASE_URL}accounts/login`, "POST", user).then(res => {
+        return callApi(`${BASE_URL}loogin`, "POST", user).then(res => {
             if (res) {
                 dispatch(actLoginSuccess(res.data))
                 console.log(res.data)
+                localStorage.setItem('user', res.data);
                 dispatch(actShowNotifycation("success", "Đăng nhập thành công"))
             }
         }).catch(error => {

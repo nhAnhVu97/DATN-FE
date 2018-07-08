@@ -103,7 +103,7 @@ class EditQuestion extends Component {
                                 <FormItem   {...formItemLayout} label="Loại trắc nghiệm">
                                     {getFieldDecorator('test', {
                                         // rules: [{ required: true, message: 'Loại trắc nghiệm không được bỏ trống' }],
-
+                                        initialValue: 1
                                     })(
                                         <Select onChange={this.handleChangeTestType}>
                                             {this.showTestType(testType.items)}
