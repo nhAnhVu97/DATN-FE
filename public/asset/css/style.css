@@ -71,9 +71,8 @@ body {
     text-align: center;
     font-weight: bold;
     padding-bottom: 20px; }
-  .login-form .ant-form-item-control-wrapper {
-    text-align: center; }
-    .login-form .ant-form-item-control-wrapper .ant-form-explain {
-      text-align: left; }
+
+.btn-back {
+  margin: 0 10px; }
 
 /*# sourceMappingURL=style.css.map */

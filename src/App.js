@@ -6,6 +6,7 @@ import routes from './routes';
 import Navbar from './components/Navbar/Navbar'
 import { Row, Col } from 'antd';
 import LoginPage from './pages/Login/LoginPage';
+import Logo from './logo.png';
 class App extends Component {
   render() {
     return (
@@ -13,7 +14,7 @@ class App extends Component {
         <div className="App">
           <nav className="navbar">
             <div className="title">
-              <img src="./asset/images/logo.png" alt="logo.png" className="logo" />
+              <img src={Logo} alt="logo.png" className="logo" />
               Trang quản trị
                     </div>
           </nav>

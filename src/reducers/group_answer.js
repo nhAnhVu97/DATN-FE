@@ -15,6 +15,12 @@ const question = (state = initialState, action) => {
             return { ...state, isLoading: false, items: action.groupAnswer }
         case Types.FETCH_GROUP_ANSWERS_ERROR:
             return { ...state, isLoading: false, error: action.groupAnswer }
+        case Types.FETCH_GROUP_ANSWERS_WITH_ID_TEST_TYPE:
+            return { ...state, isLoading: true }
+        case Types.FETCH_GROUP_ANSWERS_WITH_ID_TEST_TYPE_SUCCESS:
+            return { ...state, isLoading: false, items: action.groupAnswer }
+        case Types.FETCH_GROUP_ANSWERS_WITH_ID_TEST_TYPE_ERROR:
+            return { ...state, isLoading: false, error: action.groupAnswer }
         case Types.ADD_GROUP_ANSWERS:
             return { ...state, isLoading: true }
         case Types.ADD_GROUP_ANSWERS_SUCCESS:

@@ -128,7 +128,7 @@ class TypeNewsPage extends Component {
                 </div>
                 <div className="box">
                     <div className="menu">
-                        {(notifycation.messages) ? <Alert closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
+                    {(notifycation.isShow) ? <Alert description={<Link to="/articles/add">Thêm bài viết</Link>} banner closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
                     </div>
                     <Link to="/typenews/add" >
                         <Button>Thêm loại tin</Button>

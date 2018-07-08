@@ -1,7 +1,7 @@
 import callApi from './../ultils/callApi';
 import * as Types from './../constants/ActionType';
 import { BASE_URL } from './../ultils/config';
-import { actShowNotifycation } from './NotifyAction';
+import { actShowNotifycation, actHideNotifycation } from './NotifyAction';
 export const actFetchArticleRequest = () => {
     return (dispatch) => {
         dispatch(actFetchArticle());
@@ -84,8 +84,10 @@ export const actUpdateArticleRequest = (article) => {
         return callApi(`${BASE_URL}articles/${article.id}`, "PUT", article).then(res => {
             if (res) {
                 dispatch(actUpdateArticleSuccess(res.data))
-                console.log(res.data)
                 dispatch(actShowNotifycation("success", "Cập nhật thành công"))
+                setTimeout(() => {
+                    dispatch(actHideNotifycation());
+                }, 10000);
             }
         }).catch(error => {
             if (error) {
@@ -126,8 +128,10 @@ export const actAddArticleRequest = (article) => {
         return callApi(`${BASE_URL}articles`, "POST", article).then(res => {
             if (res) {
                 dispatch(actAddArticleSuccess(res.data))
-                console.log(res.data)
                 dispatch(actShowNotifycation("success", "Thêm thành công"))
+                setTimeout(() => {
+                    dispatch(actHideNotifycation());
+                }, 10000);
             }
         }).catch(error => {
             if (error) {

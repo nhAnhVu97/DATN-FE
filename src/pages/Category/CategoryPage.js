@@ -119,7 +119,7 @@ class CategoryPage extends Component {
                 </div>
                 <div className="box">
                     <div className="menu">
-                        {(notifycation.messages) ? <Alert closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
+                        {(notifycation.isShow) ? <Alert description={<Link to="/typenews/add">Thêm loại tin</Link>} banner closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
                     </div>
                     <Link to="/categories/add" >
                         <Button>Thêm thể loại</Button>

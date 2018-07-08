@@ -96,9 +96,13 @@ body {
     padding: 35px !important;
     margin-top: 50px !important;
     .ant-form-item-control-wrapper {
-        text-align: center;
-        .ant-form-explain {
-            text-align: left;
-        }
+        // text-align: center;
+        // .ant-form-explain {
+        //     text-align: left;
+        // }
     }
+}
+
+.btn-back{
+    margin:  0 10px;
 }

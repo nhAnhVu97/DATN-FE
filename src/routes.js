@@ -9,9 +9,10 @@ import EditCategoryPage from './pages/Category/EditCategoryPage';
 import TypeNewsPage from './pages/TypeNews/TypeNewsPage';
 import EditTypeNewPage from './pages/TypeNews/EditTypeNewPage';
 import AddTypeNewPage from './pages/TypeNews/AddTypeNewPage';
-import ImagePage from './pages/Images/ImagePage';
+// import ImagePage from './pages/Images/ImagePage';
 import QuestionPage from './pages/Question/QuestionPage';
 import AddQuestion from './pages/Question/AddQuestion';
+import EditQuestion from './pages/Question/EditQuestion';
 import AddGroup from './pages/GroupAnswer/AddGroup';
 import GroupAnswerPage from './pages/GroupAnswer/GroupAnswerPage';
 import EditGroup from './pages/GroupAnswer/EditGroup';
@@ -66,11 +67,11 @@ const routes = [
         exact: true,
         main: ({ history }) => <AddTypeNewPage history={history} />
     },
-    {
-        path: '/images',
-        exact: true,
-        main: () => <ImagePage />
-    },
+    // {
+    //     path: '/images',
+    //     exact: true,
+    //     main: () => <ImagePage />
+    // },
     {
         path: '/question',
         exact: true,
@@ -79,7 +80,12 @@ const routes = [
     {
         path: '/question/add',
         exact: true,
-        main: () => <AddQuestion />
+        main: ({history}) => <AddQuestion history={history} />
+    },
+    {
+        path: '/question/edit/:id',
+        exact: true,
+        main: ({ history, match }) => <EditQuestion history={history} match={match} />
     },
     {
         path: '/group/add',

@@ -1,6 +1,6 @@
 import callApi from './../ultils/callApi';
 import * as Types from './../constants/ActionType';
-import { actShowNotifycation } from './NotifyAction';
+import { actShowNotifycation, actHideNotifycation } from './NotifyAction';
 import { BASE_URL } from './../ultils/config';
 import { stringify } from 'querystring';
 //fetch category
@@ -86,6 +86,9 @@ export const actEditCategoryRequest = (category) => {
             if (res) {
                 dispatch(actEditCategorySuccess(res.data))
                 dispatch(actShowNotifycation("success", "Cập nhật thành công"))
+                setTimeout(() => {
+                    dispatch(actHideNotifycation());
+                }, 10000);
             }
         }).catch(error => {
             console.log(error)
@@ -126,6 +129,9 @@ export const actAddCategoryRequest = (category) => {
             if (res.status === 200) {
                 dispatch(actAddCategorySuccess(res.data))
                 dispatch(actShowNotifycation("success", "Thêm thành công"))
+                setTimeout(() => {
+                    dispatch(actHideNotifycation());
+                }, 10000);
             }
         }).catch(error => {
             dispatch(actAddCategoryError(error))

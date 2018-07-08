@@ -31,6 +31,13 @@ const itemEditing = (state = initialState, action) => {
             return { ...state, isLoading: false };
         case Types.FETCH_GROUP_ANSWERS_WITH_ID_ERROR:
             return { ...state, isLoading: false };
+        case Types.FETCH_QUESTION_WITH_ID:
+            return { ...state, isLoading: true }
+        case Types.FETCH_QUESTION_WITH_ID_SUCCESS:
+            state = action.questions
+            return { ...state, isLoading: false };
+        case Types.FETCH_QUESTION_WITH_ID_ERROR:
+            return { ...state, isLoading: false };
 
         default:
             return state;

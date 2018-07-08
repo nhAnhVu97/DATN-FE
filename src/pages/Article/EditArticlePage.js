@@ -90,7 +90,8 @@ class EditArticlePage extends Component {
                     account_id: 1
                 }
                 this.props.onEditArticle(article);
-                this.props.history.push("/articles")
+                // this.props.history.push("/articles")
+                window.location.href ="/articles"
             }
         });
     }
@@ -209,6 +210,7 @@ class EditArticlePage extends Component {
                                         events={{
                                             "change": this.handleChangeDescription
                                         }}
+                                        
                                     />
                                     {/* )} */}
                                 </FormItem>

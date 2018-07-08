@@ -8,3 +8,9 @@ export const actShowNotifycation = (types, messages) => {
         messages
     }
 }
+
+export const actHideNotifycation = () => {
+    return {
+        type: Types.HIDE_NOTIICATION
+    }
+}

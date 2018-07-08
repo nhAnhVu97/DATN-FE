@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Tabs, Divider, Row, Col, Alert, Popconfirm, Button } from 'antd';
 import { connect } from 'react-redux';
-import { actShowQuestionTypeRequest } from './../../actions';
+import { actShowQuestionTypeRequest, actDeleteQuestionRequest } from './../../actions';
 import { Link } from 'react-router-dom';
 const TabPane = Tabs.TabPane;
 class QuestionPage extends Component {
@@ -19,20 +19,20 @@ class QuestionPage extends Component {
         this.props.getQuestion();
     }
 
+    onDeleteQuestion = (record) => {
+        this.props.deleteQuestion(record.id)
+    }
+
     render() {
         let { sortedInfo } = this.state;
         let { question, notifycation } = this.props;
         let holland = [];
         let mbti = [];
-        console.log(question)
         for (var i in question.items) {
-            if (question.items[i].name === "holland") {
-                // lay category status = true
-                holland.push(question.items[i].question)
-                console.log(holland)
-            } else {
-                mbti.push(question.items[i].question)
-                console.log(mbti)
+            if (question.items[i].test_type === "HOLLAND") {
+                holland.push(question.items[i])
+            } else if (question.items[i].test_type === "MBTI") {
+                mbti.push(question.items[i])
             }
         }
         sortedInfo = sortedInfo || {};
@@ -53,9 +53,9 @@ class QuestionPage extends Component {
             key: 'action',
             render: (record) => (
                 <span>
-                    <Link to={`/categories/edit/${record.id}`}>Sửa</Link>
+                    <Link to={`/question/edit/${record.id}`}>Sửa</Link>
                     <Divider type="vertical" />
-                    <Popconfirm title="Bạn có muốn xóa thể loại này không?" onConfirm={() => this.onDeleteCategory(record)} okText="Đồng ý" cancelText="Hủy bỏ">
+                    <Popconfirm title="Bạn có muốn xóa câu hỏi này không?" onConfirm={() => this.onDeleteQuestion(record)} okText="Đồng ý" cancelText="Hủy bỏ">
                         <a >Xóa</a>
                     </Popconfirm>
                 </span >
@@ -78,10 +78,10 @@ class QuestionPage extends Component {
             key: 'action',
             render: (record) => (
                 <span>
-                    <Link to={`/categories/edit/${record.id}`}>Sửa</Link>
+                    <Link to={`/question/edit/${record.id}`}>Sửa</Link>
                     <Divider type="vertical" />
-                    <Popconfirm title="Bạn có muốn phục hồi thể loại này không?" onConfirm={() => this.onRestoreCategory(record)} okText="Đồng ý" cancelText="Hủy bỏ">
-                        <a >Phục hồi</a>
+                    <Popconfirm title="Bạn có muốn xóa câu hỏi này không?" onConfirm={() => this.onDeleteQuestion(record)} okText="Đồng ý" cancelText="Hủy bỏ">
+                        <a >Xóa</a>
                     </Popconfirm>
                 </span>
             ),
@@ -96,7 +96,7 @@ class QuestionPage extends Component {
                     <div className="menu">
                         {(notifycation.messages) ? <Alert closable message={notifycation.messages} type={notifycation.types} showIcon /> : ""}
                     </div>
-                    <Link to="/categories/add" >
+                    <Link to="/question/add" >
                         <Button>Thêm câu hỏi</Button>
                     </Link>
                     <Row>
@@ -124,6 +124,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getQuestion: () => {
             dispatch(actShowQuestionTypeRequest())
+        },
+        deleteQuestion: (id) =>{
+            dispatch(actDeleteQuestionRequest(id))
         }
     }
 }

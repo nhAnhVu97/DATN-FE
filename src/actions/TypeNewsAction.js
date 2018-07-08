@@ -1,7 +1,7 @@
 import callApi from './../ultils/callApi';
 import { BASE_URL } from './../ultils/config';
 import * as Types from './../constants/ActionType';
-import { actShowNotifycation } from './NotifyAction';
+import { actShowNotifycation,actHideNotifycation } from './NotifyAction';
 import { stringify } from 'querystring';
 
 
@@ -71,6 +71,9 @@ export const actUpdateTypeNewsRequest = (typenews) => {
         return callApi(`${BASE_URL}newstype/${typenews.id}`, "PUT", typenews).then(res => {
             dispatch(actUpdateTypeNewsSuccess(res.data))
             dispatch(actShowNotifycation("success", "Cập nhật thành công"))
+            setTimeout(() => {
+                dispatch(actHideNotifycation());
+            }, 10000);
         }).catch(err => {
             dispatch(actUpdateTypeNewsError(err.message))
             dispatch(actShowNotifycation("error", err.message))
@@ -106,6 +109,9 @@ export const actAddTypeNewsRequest = (typenews) => {
                 console.log(res.data)
                 dispatch(actAddTypeNewsSuccess(res.data))
                 dispatch(actShowNotifycation("success", "Thêm thành công"))
+                setTimeout(() => {
+                    dispatch(actHideNotifycation());
+                }, 10000);
             }
         }).catch(err => {
             dispatch(actAddTypeNewsError(err.message))

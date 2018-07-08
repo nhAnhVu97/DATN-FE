@@ -1,6 +1,6 @@
 import callApi from './../ultils/callApi';
 import * as Types from './../constants/ActionType';
-import { actShowNotifycation } from './NotifyAction';
+import { actShowNotifycation,actHideNotifycation } from './NotifyAction';
 import { BASE_URL } from './../ultils/config';
 
 export const actFetchTestTypeRequest = () => {

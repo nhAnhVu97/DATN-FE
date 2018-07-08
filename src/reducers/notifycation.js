@@ -10,8 +10,8 @@ const notifycation = (state = initialState, action) => {
     switch (action.type) {
         case Types.SHOW_NOTIFICATION:
             return { ...state, isShow: true, types: action.types, messages: action.messages }
-        // case Types.CLOSE_NOTIFICATION:
-        //     return { ...state, isLoading: false, items: action.article };
+        case Types.HIDE_NOTIICATION:
+            return { ...state, isShow: false, };
         default:
             return state;
     }

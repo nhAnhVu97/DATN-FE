@@ -203,9 +203,7 @@ class ArticlePage extends Component {
                     width={800}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>Quay lại</Button>,
-                        <Button key="submit" type="primary">
-                            Sửa bài viết
-                        </Button>,
+
                     ]}
                 >
                     <InfoArticles article={itemEditing} />

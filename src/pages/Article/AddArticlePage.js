@@ -3,7 +3,7 @@ import { Form, Input, Modal, Icon, Select, Upload, Row, Col, Checkbox, Button, m
 // import { storage } from './../firebase/index'
 import { connect } from 'react-redux';
 import { actFetchCategoryRequest, actFetchTypeNewsWithCategoryIdRequest, actAddArticleRequest } from './../../actions/index';
-
+import { Link } from 'react-router-dom';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import { convertToRaw } from 'draft-js';
@@ -73,7 +73,8 @@ class AddArticlePage extends Component {
                     account_id: 1
                 }
                 this.props.onAddArticle(article);
-                this.props.history.push("/articles")
+                // this.props.history.push("/articles")
+                window.location.href="/articles"
             }
         });
     }
@@ -126,7 +127,7 @@ class AddArticlePage extends Component {
     SelectedNewsType = (value) => {
         this.props.getTypeNews(value);
         this.setState({ disabledNewsType: false })
-        this.props.form.setFieldsValue({'typeNews': ''})
+        this.props.form.setFieldsValue({ 'typeNews': '' })
     }
 
 
@@ -160,7 +161,7 @@ class AddArticlePage extends Component {
                                         rules: [{ required: true, message: 'Vui lòng chọn thể loại ' }],
                                     })(
                                         <Select onChange={this.SelectedNewsType} placeholder="Chọn thể loại">
-                                                {this.showOptionsCategory(category.items)}
+                                            {this.showOptionsCategory(category.items)}
                                         </Select>
                                     )}
                                 </FormItem>
@@ -169,7 +170,7 @@ class AddArticlePage extends Component {
                                         rules: [{ required: true, message: 'Vui lòng chọn loại tin ' }],
                                     })(
                                         <Select disabled={this.state.disabledNewsType} >
-                                                {(newsType.isLoading) ? "" : this.showOptionsTypeNews(newsType.items)}
+                                            {(newsType.isLoading) ? "" : this.showOptionsTypeNews(newsType.items)}
                                         </Select>
                                     )}
                                 </FormItem>
@@ -233,10 +234,15 @@ class AddArticlePage extends Component {
                                         <Checkbox>Hiện bài viết</Checkbox>
                                     )}
                                 </FormItem>
-                                <FormItem   {...formItemLayout}>
-                                    <Button type="primary" htmlType="submit" className="login-form-button">
-                                        Hoàn thành
-                                    </Button>
+                                <FormItem>
+                                    <Col offset={4}>
+                                        <Link to="/articles">
+                                            <Button className="btn-back" ><Icon type="arrow-left" />Quay lại</Button>
+                                        </Link>
+                                        <Button type="primary" htmlType="submit" className="login-form-button">
+                                            Hoàn thành<Icon type="edit" />
+                                        </Button>
+                                    </Col>
                                 </FormItem>
                             </Form>
                         </Col>

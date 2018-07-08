@@ -1,6 +1,6 @@
 import callApi from './../ultils/callApi';
 import * as Types from './../constants/ActionType';
-import { actShowNotifycation } from './NotifyAction';
+import { actShowNotifycation, actHideNotifycation } from './NotifyAction';
 import { BASE_URL } from './../ultils/config';
 
 export const actAddGroupAnswersRequest = (items) => {
@@ -9,6 +9,9 @@ export const actAddGroupAnswersRequest = (items) => {
         return callApi(`${BASE_URL}answertypes`, "POST", items).then(res => {
             dispatch(actAddGroupAnswersSuccess(res.data))
             dispatch(actShowNotifycation("success", "Thêm thành công"))
+            setTimeout(() => {
+                dispatch(actHideNotifycation());
+            }, 10000);
         }).catch(err => {
             dispatch(actAddGroupAnswersError(err.message))
             dispatch(actShowNotifycation("error", err.message))
@@ -107,6 +110,9 @@ export const actUpdateGroupAnswerRequest = (items) => {
         return callApi(`${BASE_URL}answertypes/${items.id}`, "PUT", items).then(res => {
             dispatch(actUpdateGroupAnswerSuccess(res.data))
             dispatch(actShowNotifycation("success", "Sửa thành công"))
+            setTimeout(() => {
+                dispatch(actHideNotifycation());
+            }, 10000);
         }).catch(err => {
             dispatch(actUpdateGroupAnswerError(err.message))
             dispatch(actShowNotifycation("error", err.message))
@@ -130,6 +136,38 @@ export const actUpdateGroupAnswerSuccess = (groupAnswer) => {
 export const actUpdateGroupAnswerError = (groupAnswer) => {
     return {
         type: Types.UPDATE_GROUP_ANSWERS_ERROR,
+        groupAnswer
+    }
+}
+
+
+export const actGetAnswerTypeWithIdTestTypeRequest = (id) => {
+    return (dispatch) => {
+        dispatch(actGetAnswerTypeWithIdTestType())
+        return callApi(`${BASE_URL}AnswerTypes/AnswerTypeByTest/${id}`, "GET", null).then(res => {
+            dispatch(actGetAnswerTypeWithIdTestTypeSuccess(res.data))
+        }).catch(err => {
+            dispatch(actGetAnswerTypeWithIdTestTypeError(err.message))
+        })
+    }
+}
+
+export const actGetAnswerTypeWithIdTestType = () => {
+    return {
+        type: Types.FETCH_GROUP_ANSWERS_WITH_ID_TEST_TYPE
+    }
+}
+
+export const actGetAnswerTypeWithIdTestTypeSuccess = (groupAnswer) => {
+    return {
+        type: Types.FETCH_GROUP_ANSWERS_WITH_ID_TEST_TYPE_SUCCESS,
+        groupAnswer
+    }
+}
+
+export const actGetAnswerTypeWithIdTestTypeError = (groupAnswer) => {
+    return {
+        type: Types.FETCH_GROUP_ANSWERS_WITH_ID_TEST_TYPE_ERROR,
         groupAnswer
     }
 }
