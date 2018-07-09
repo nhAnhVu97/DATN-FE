@@ -48,6 +48,13 @@ class QuestionPage extends Component {
             key: 'name',
             sorter: (a, b) => a.name.length - b.name.length,
             sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+        },
+        {
+            title: 'Tên nhóm',
+            dataIndex: 'answer_type_name',
+            key: 'answer_type_name',
+            sorter: (a, b) => a.name.length - b.name.length,
+            sortOrder: sortedInfo.columnKey === 'answer_type_name' && sortedInfo.order,
         }, {
             title: 'Chức năng',
             key: 'action',
@@ -73,6 +80,12 @@ class QuestionPage extends Component {
             key: 'name',
             sorter: (a, b) => a.name.length - b.name.length,
             sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+        }, {
+            title: 'Tên nhóm',
+            dataIndex: 'answer_type_name',
+            key: 'answer_type_name',
+            sorter: (a, b) => a.name.length - b.name.length,
+            sortOrder: sortedInfo.columnKey === 'answer_type_name' && sortedInfo.order,
         }, {
             title: 'Chức năng',
             key: 'action',
@@ -125,7 +138,7 @@ const mapDispatchToProps = (dispatch) => {
         getQuestion: () => {
             dispatch(actShowQuestionTypeRequest())
         },
-        deleteQuestion: (id) =>{
+        deleteQuestion: (id) => {
             dispatch(actDeleteQuestionRequest(id))
         }
     }

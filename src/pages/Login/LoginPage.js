@@ -2,26 +2,45 @@ import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Row, Col, Alert } from 'antd';
 import { actLoginRequest } from './../../actions/index';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 const FormItem = Form.Item
 class Login extends Component {
+
+  constructor(props){
+    super(props)
+    this.state={
+      redirect : false
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         var user = {
           username: values.userName,
           password: values.password
         }
         this.props.onLogin(user)
-        this.props.history.push("/")
       }
     });
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.user.isSuccess) {
+      this.setState({redirect:true})
+    }
   }
 
   render() {
     const { getFieldDecorator } = this.props.form;
     const { user } = this.props;
+    if(user.items.length > 0){
+      console.log("redirect")
+    } 
+    if(this.state.redirect){
+      window.location.href="/"
+    }
     return (
       <Row>
         <Col lg={8} offset={8}>
@@ -29,8 +48,7 @@ class Login extends Component {
             <div className="title">
               ĐĂNG NHẬP
             </div>
-            
-            {/* <Alert message="Success Tips" type="success" showIcon /> */}
+            {(user.error != null) ? <Alert banner message="Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu" type="error" showIcon /> : ""}
             <FormItem>
               {getFieldDecorator('userName', {
                 rules: [{ required: true, message: 'Vui lòng nhập tên đăng nhập' }],
@@ -45,9 +63,9 @@ class Login extends Component {
                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Mật khẩu" />
               )}
             </FormItem>
-            <FormItem>
-              <Button type="primary" htmlType="submit" className="login-form-button">
-                Tiếp tục<Icon type="arrow-right" />
+            <FormItem style={{ textAlign: "center" }}>
+              <Button size="large" loading={user.isLoading} icon="arrow-right" type="primary" htmlType="submit" className="login-form-button">
+                Tiếp tục
               </Button>
             </FormItem>
           </Form>
@@ -60,7 +78,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.auth
   }
 }
 

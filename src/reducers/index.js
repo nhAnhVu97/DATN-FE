@@ -7,6 +7,7 @@ import typeNews from './typeNews';
 import question from './question';
 import testType from './testType';
 import group_answer from './group_answer';
+import auth from './auth';
 const appReducers = combineReducers({
     article,
     category,
@@ -15,7 +16,8 @@ const appReducers = combineReducers({
     typeNews,
     question,
     testType,
-    group_answer
+    group_answer,
+    auth
 });
 
 

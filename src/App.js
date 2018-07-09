@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import routes from './routes';
 // component
 import Navbar from './components/Navbar/Navbar'
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import LoginPage from './pages/Login/LoginPage';
 import Logo from './logo.png';
 
@@ -26,6 +26,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 class App extends Component {
+  onLogout() {
+    localStorage.removeItem("user");
+    window.location.href="/login"
+  }
   render() {
     if (localStorage.getItem("user") === null) {
       return (
@@ -35,11 +39,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <nav className="navbar">
+          <nav className="navbar" style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="title">
               <img src={Logo} alt="logo.png" className="logo" />
               Trang quản trị
                     </div>
+            <div className="action">
+              <Button onClick={this.onLogout}>Đăng xuất</Button>
+            </div>
           </nav>
           <Row>
             <Col lg={5}>

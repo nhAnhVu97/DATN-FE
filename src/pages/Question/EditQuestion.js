@@ -49,7 +49,10 @@ class EditQuestion extends Component {
                 }
                 this.props.onEditQuestion(question)
                 // this.props.form.setFieldsValue({ 'group': '', 'question': '' })
-               
+                setTimeout(() => {
+                    window.location.href="/question"
+                }, 3000);
+
             }
         })
     }
@@ -88,6 +91,7 @@ class EditQuestion extends Component {
         };
         const { getFieldDecorator } = this.props.form;
         var { testType, groupAnswer, notifycation, question } = this.props;
+        // this.props.form.setFieldsValue({ 'test':  })
         return (
             <div className="table" >
                 <div className="table-title">

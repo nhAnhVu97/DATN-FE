@@ -19,7 +19,6 @@ class ArticlePage extends Component {
     }
 
     handleChange = (pagination, sorter) => {
-        console.log('Various parameters', pagination, sorter);
         this.setState({
             sortedInfo: sorter,
         });
@@ -32,7 +31,6 @@ class ArticlePage extends Component {
     }
 
     handleOk = (e) => {
-        console.log(e);
         this.setState({
             visible: false,
         });
@@ -49,7 +47,6 @@ class ArticlePage extends Component {
   * record => array  
   */
     onDeleteArticle = (record) => {
-        console.log(record);
         if (record.id) {
             var article = {
                 id: record.id,
@@ -94,19 +91,20 @@ class ArticlePage extends Component {
             dataIndex: 'id',
             key: 'id',
             sorter: (a, b) => a.id - b.id,
-            sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+           
         }, {
             title: 'Tiêu đề',
             dataIndex: 'title',
             key: 'title',
             width: 450,
             sorter: (a, b) => a.title.length - b.title.length,
-            sortOrder: sortedInfo.columnKey === 'title' && sortedInfo.order,
+
         }, {
             title: 'Thể loại',
             dataIndex: 'Category.name',
             key: 'Category.name',
             sorter: (a, b) => a.Category.name.length - b.Category.name.length,
+        
         }, {
             title: 'Loại tin',
             dataIndex: 'NewsType.name',
@@ -139,7 +137,6 @@ class ArticlePage extends Component {
             key: 'title',
             width: 450,
             sorter: (a, b) => a.title.length - b.title.length,
-            sortOrder: sortedInfo.columnKey === 'title' && sortedInfo.order,
         }, {
             title: 'Thể loại',
             dataIndex: 'Category.name',

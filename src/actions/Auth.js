@@ -6,7 +6,7 @@ import { actShowNotifycation } from './NotifyAction';
 export const actLoginRequest = (user) => {
     return (dispatch) => {
         dispatch(actLogin());
-        return callApi(`${BASE_URL}loogin`, "POST", user).then(res => {
+        return callApi(`${BASE_URL}login`, "POST", user).then(res => {
             if (res) {
                 dispatch(actLoginSuccess(res.data))
                 console.log(res.data)
@@ -37,7 +37,7 @@ export const actLoginSuccess = (user) => {
 
 export const actLoginError = (user) => {
     return {
-        type: Types.LOGIN,
+        type: Types.LOGIN_ERROR,
         user
     }
 }
